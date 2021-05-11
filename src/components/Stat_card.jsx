@@ -1,6 +1,9 @@
-import { Box, chakra, useColorModeValue, Flex, Image} from "@chakra-ui/react";
+import { Box, chakra, useColorModeValue, Flex, Image } from "@chakra-ui/react";
+import { useState } from "react";
+import { useEffect } from "react";
+import React from "react"
 
-const Stat_card = () => {
+const Stat_card = (props) => {
   return (
     <Box
       w="sm"
@@ -12,13 +15,7 @@ const Stat_card = () => {
       rounded="lg"
     >
       <Flex justifyContent={{ base: "center", md: "end" }} mt={-16}>
-        <Image
-          w={20}
-          h={20}
-          fit="cover"
-          alt="infected"
-          src="https://image.flaticon.com/icons/png/128/2659/2659980.png"
-        />
+        <Image w={20} h={20} fit="cover" alt="card icon" src={props.netimg} />
       </Flex>
 
       <chakra.h2
@@ -27,7 +24,7 @@ const Stat_card = () => {
         mt={{ base: 2, md: 0 }}
         fontWeight="bold"
       >
-        100
+      {props.count}
       </chakra.h2>
 
       <chakra.p
@@ -35,22 +32,20 @@ const Stat_card = () => {
         mb={3}
         color={useColorModeValue("gray.600", "red.400")}
         fontSize="3xl"
-      >
-        Infected
-      </chakra.p>
+      >{props.tag}</chakra.p>
       <chakra.p
         mt={1}
         color={useColorModeValue("gray.600", "gray.300")}
         fontSize="xl"
       >
-        Date
+        {props.date}
       </chakra.p>
       <chakra.p
         mb={3}
         color={useColorModeValue("gray.600", "gray.300")}
         fontSize="xl"
       >
-        <i> Description</i>
+        <i> {props.desc}</i>
       </chakra.p>
     </Box>
   );
