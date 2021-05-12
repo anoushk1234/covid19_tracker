@@ -8,10 +8,35 @@ import {
 } from "@chakra-ui/react";
 import Picker from "./components/Picker";
 import Stat_card from "./components/Stat_card";
-import CovidChart from "./components/Chart";
+import BarChart from "./components/Chart";
 import Header from "./components/Header";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
 const App = () => {
+ // var jsonData=[];
+ var countries=[];
+  const fetchCovid = async () => {
+  const data = await fetch(
+    'https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true'
+  );
+   const jsonData = await data.json();
+  // jsArray=  [...jsonData];
+  //console.log(jsonData[19]["country"]);
+  jsonData.forEach(element => {
+    countries.push(element['country'])
+  });
+  //console.log(countries)
+};
+fetchCovid();
+
+
+
+// for (let index = 0; index < 49; index++) {
+  
+//    countries.push(jsData[index]["country"])
+// }
+
+
+
   return (
     <VStack
       bg={useColorModeValue("#F9FAFB", "blue.900")}
@@ -47,8 +72,11 @@ const App = () => {
           ></Stat_card>
         </HStack>
       </Flex>
-      <Flex p={10} w="lg" alignSelf="center">
-        <Picker></Picker>
+      <Flex mt={20} w="md" alignSelf="center">
+        <Picker countries={countries}></Picker>
+      </Flex>
+      <Flex md={10} w="md" alignSelf="center">
+        {/* <Picker></Picker> */}
       </Flex>
       <Flex justify="center">
         <Box
@@ -56,10 +84,10 @@ const App = () => {
           py={4}
           px={8}
           rounded="lg"
-          bg={useColorModeValue("white", "gray.900")}
+          bg={useColorModeValue("white", "blue.700")}
           shadow="lg"
         >
-          <CovidChart></CovidChart>
+          <BarChart></BarChart>
         </Box>
       </Flex>
       <StackDivider h="10" value="xyz"></StackDivider>

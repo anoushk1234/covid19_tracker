@@ -2,16 +2,14 @@ import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 //import reportWebVitals from './reportWebVitals';
-import { ChakraProvider,ColorModeScript } from "@chakra-ui/react"
-import theme from './theme';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import theme from "./theme";
+import { ColorModeSwitcher } from "./ColorModeSwitcher";
 ReactDOM.render(
-  <StrictMode>
-    <ChakraProvider theme={theme}>
+  <ChakraProvider theme={theme}>
     <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <App />
-    </ChakraProvider>
-  </StrictMode>,
+    <App />
+  </ChakraProvider>,
   document.getElementById("root")
 );
 

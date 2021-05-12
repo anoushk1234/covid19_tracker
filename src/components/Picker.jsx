@@ -1,9 +1,16 @@
 import { Select } from "@chakra-ui/react";
+import { useState } from 'react';
 
-const Picker = () => {
+const Picker = (props) => {
+  
+//const names=[...props.countries]
+console.log(props.countries)
   return (
-    <Select variant="filled" placeholder="">
-      <option value="option1">Option 1</option>
+    <Select variant="filled" placeholder="options">
+      {props.countries.forEach((element) => {
+        console.log(element)
+        return <option value={element}>{element}</option>;
+      })}
     </Select>
   );
 };

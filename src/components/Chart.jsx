@@ -1,82 +1,67 @@
+import React from 'react'
+import { Line, defaults } from 'react-chartjs-2'
 
-//  http://dummy.restapiexample.com/api/v1/employees
-//ttps://cors-anywhere.herokuapp.com/https://api.covid19india.org/v4/min/data-all.min.json
-import React, { useState, useEffect } from "react";
-import { Line } from "react-chartjs-2";
-import axios from "axios";
+// defaults.global.tooltips.enabled = false
+// defaults.global.legend.position = 'bottom'
 
-const CovidChart = () => {
-  const [chartData, setChartData] = useState({});
-  const [employeeSalary, setEmployeeSalary] = useState([]);
-  const [employeeAge, setEmployeeAge] = useState([]);
-
-  const chart = () => {
-    let empSal = [];
-    let empAge = [];
-    axios
-      .get("http://dummy.restapiexample.com/api/v1/employees")
-      .then(res => {
-        console.log(res);
-        for (const dataObj of res.data.data) {
-          empSal.push(parseInt(dataObj.employee_salary));
-          empAge.push(parseInt(dataObj.employee_age));
-        }
-        setChartData({
-          labels: empAge,
+const BarChart = () => {
+  return (
+    <div>
+      <Line
+        data={{
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
           datasets: [
             {
-              label: "level of thiccness",
-              data: empSal,
-              backgroundColor: ["rgba(75, 192, 192, 0.6)"],
-              borderWidth: 4
-            }
-          ]
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    console.log(empSal, empAge);
-  };
-
-  useEffect(() => {
-    chart();
-  }, []);
-  return (
-    <div className="App">
-      <h1>Data</h1>
-      <div>
-        <Line
-          data={chartData}
-          options={{
-            responsive: true,
-            title: { text: "THICCNESS SCALE", display: true },
-            scales: {
-              yAxes: [
-                {
-                  ticks: {
-                    autoSkip: true,
-                    maxTicksLimit: 10,
-                    beginAtZero: true
-                  },
-                  gridLines: {
-                    display: false
-                  }
-                }
+              label: '# of votes',
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
               ],
-              xAxes: [
-                {
-                  gridLines: {
-                    display: false
-                  }
-                }
-              ]
-            }
-          }}
-        />
-      </div>
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+              ],
+              borderWidth: 1,
+            },
+            // {
+            //   label: 'Quantity',
+            //   data: [47, 52, 67, 58, 9, 50],
+            //   backgroundColor: 'orange',
+            //   borderColor: 'red',
+            // },
+          ],
+        }}
+        height={400}
+        width={600}
+        options={{
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            ],
+          },
+          legend: {
+            labels: {
+              fontSize: 25,
+            },
+          },
+        }}
+      />
     </div>
-  );
-};
+  )
+}
 
-export default CovidChart;
+export default BarChart
