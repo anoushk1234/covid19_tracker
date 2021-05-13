@@ -11,38 +11,31 @@ import Stat_card from "./components/Stat_card";
 import BarChart from "./components/Chart";
 import Header from "./components/Header";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
+import React from "react";
+import { useState } from 'react';
 const App = () => {
- // var jsonData=[];
- var countries=[];
+  // var jsonData=[];
+  var countries = [];
   const fetchCovid = async () => {
-  const data = await fetch(
-    'https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true'
-  );
-   const jsonData = await data.json();
-  // jsArray=  [...jsonData];
-  //console.log(jsonData[19]["country"]);
-  jsonData.forEach(element => {
-    countries.push(element['country'])
-  });
-  //console.log(countries)
-};
-fetchCovid();
-
-
-
-// for (let index = 0; index < 49; index++) {
-  
-//    countries.push(jsData[index]["country"])
-// }
-
-
+    const data = await fetch(
+      "https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true"
+    );
+    const jsonData = await data.json();
+    // jsArray=  [...jsonData];
+    //console.log(jsonData[19]["country"]);
+    jsonData.map((element) => {
+      countries.push(element["country"]);
+    });
+    //console.log(countries)
+  };
+  fetchCovid();
+const [whichCountry,setWhichCountry]=useState("init")
+const addCountry=(param)=>{
+setWhichCountry(()=>whichCountry=[...param]);
+}
 
   return (
-    <VStack
-      bg={useColorModeValue("#F9FAFB", "blue.900")}
-      spacing={4}
-      align="stretch"
-    >
+    <VStack bg={"blue.900"} spacing={4} align="stretch">
       <ColorModeSwitcher alignSelf="flex-end" />
       <Flex justify="center">
         <Header />
@@ -73,22 +66,13 @@ fetchCovid();
         </HStack>
       </Flex>
       <Flex mt={20} w="md" alignSelf="center">
-        <Picker countries={countries}></Picker>
+        <Picker countries={countries} selectCountry={addCountry}></Picker>
       </Flex>
       <Flex md={10} w="md" alignSelf="center">
         {/* <Picker></Picker> */}
       </Flex>
       <Flex justify="center">
-        <Box
-          w="5xl"
-          py={4}
-          px={8}
-          rounded="lg"
-          bg={useColorModeValue("white", "blue.700")}
-          shadow="lg"
-        >
-          <BarChart></BarChart>
-        </Box>
+        <BarChart></BarChart>
       </Flex>
       <StackDivider h="10" value="xyz"></StackDivider>
     </VStack>
