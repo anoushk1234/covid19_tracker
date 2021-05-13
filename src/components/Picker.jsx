@@ -5,10 +5,10 @@ import { Select } from "@chakra-ui/react";
 const Picker = (props,selectCountry) => {
 
   return (
-    <Select variant="filled" placeholder="country" onInput={selectCountry()}>
+    <Select variant="filled" placeholder="country" >
       {props.countries.map((element) => {
         
-        return <option value={element}>{element}</option>;
+        return <option value={element} onChange={selectCountry(element)}>{element}</option>;
       })}
     </Select>
   );
