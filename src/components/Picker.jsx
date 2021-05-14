@@ -1,18 +1,20 @@
 import { Select } from "@chakra-ui/react";
-//import { useState, React } from 'react';
-// import React from "react"
+// NO need to import react when using functional compos 
 
-const Picker = (props,selectCountry) => {
+ 
+
+const Picker = ({ countries, selectCountry }) => {
 
   return (
     <Select variant="filled" placeholder="country" >
-      {props.countries.map((element) => {
-        
-        return <option value={element} onChange={selectCountry(element)}>{element}</option>;
-      })}
+      {countries.map((element) =>
+        <option value={element} onChange={() => selectCountry(element)}>{element}</option>
+      )}
     </Select>
   );
 };
-//console.log(document.getElementsByTagName('option').value);
+//console.log(document.getElementsByTagName('option').value); // IMPORTANT - dont use dom inside JSX
 
 export default Picker;
+
+// HOPE THIS HELPED

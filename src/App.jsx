@@ -29,13 +29,13 @@ const App = () => {
     //console.log(countries)
   };
   fetchCovid();
-const [whichCountry,setWhichCountry]=useState("init")
+const [whichCountry,selectCountry]=useState("init")
 const addCountry=(param)=>{
-setWhichCountry(()=>whichCountry=[...param]);
+selectCountry([...param]);
 }
 
   return (
-    <VStack bg={"blue.900"} spacing={4} align="stretch">
+    <VStack bg={useColorModeValue("white","blue.700")} spacing={4} align="stretch">
       <ColorModeSwitcher alignSelf="flex-end" />
       <Flex justify="center">
         <Header />
