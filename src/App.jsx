@@ -12,34 +12,46 @@ import BarChart from "./components/Chart";
 import Header from "./components/Header";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
 import React from "react";
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 const App = () => {
   // var jsonData=[];
   var countries = [];
-  const fetchCovid = async () => {
-    const data = await fetch(
-      "https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true"
-    );
-    const jsonData = await data.json();
-    // jsArray=  [...jsonData];
-    //console.log(jsonData[19]["country"]);
-    jsonData.map((element) => {
-      countries.push(element["country"]);
-    });
-    //console.log(countries)
+  useEffect(() => {
+    const fetchCovid = async () => {
+      const data = await fetch(
+        "https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true"
+      );
+      const jsonData = await data.json();
+      // jsArray=  [...jsonData];
+      //console.log(jsonData[19]["country"]);
+      jsonData.map((element) => {
+        countries.push(element["country"]);
+      });
+      //console.log(countries)
+    };
+    fetchCovid();
+  });
+
+  // useEffect(()=>{
+  //   fetchCovid();
+  // })
+
+  const [whichCountry, selectCountry] = useState("init");
+  // const addCountry=(param)=>{
+  // selectCountry([...param]);
+  // }
+  const addCountry = (e) => {
+    console.log("ON SELECT CALLED");
+    selectCountry(e.target.value);
+    console.log(whichCountry);
   };
-  fetchCovid();
-const [whichCountry,selectCountry]=useState("init")
-// const addCountry=(param)=>{
-// selectCountry([...param]);
-// }
-const addCountry = (e) => {
-  console.log("ON SELECT CALLED");
-  selectCountry(e.target.value)
-};
 
   return (
-    <VStack bg={useColorModeValue("white","blue.700")} spacing={4} align="stretch">
+    <VStack
+      bg={useColorModeValue("white", "blue.700")}
+      spacing={4}
+      align="stretch"
+    >
       <ColorModeSwitcher alignSelf="flex-end" />
       <Flex justify="center">
         <Header />
