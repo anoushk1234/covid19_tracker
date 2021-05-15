@@ -30,9 +30,13 @@ const App = () => {
   };
   fetchCovid();
 const [whichCountry,selectCountry]=useState("init")
-const addCountry=(param)=>{
-selectCountry([...param]);
-}
+// const addCountry=(param)=>{
+// selectCountry([...param]);
+// }
+const addCountry = (e) => {
+  console.log("ON SELECT CALLED");
+  selectCountry(e.target.value)
+};
 
   return (
     <VStack bg={useColorModeValue("white","blue.700")} spacing={4} align="stretch">
@@ -43,7 +47,7 @@ selectCountry([...param]);
       <Flex pt={20} pd={10} w="full" justifyContent="center">
         <HStack mt={20} spacing="24px">
           <Stat_card
-            count="100"
+            count={whichCountry}
             date="11/05/21"
             desc="Total infections"
             netimg="https://image.flaticon.com/icons/png/128/2659/2659980.png"
@@ -66,7 +70,7 @@ selectCountry([...param]);
         </HStack>
       </Flex>
       <Flex mt={20} w="md" alignSelf="center">
-        <Picker countries={countries} selectCountry={addCountry}></Picker>
+        <Picker countries={countries} addCountry={addCountry}></Picker>
       </Flex>
       <Flex md={10} w="md" alignSelf="center">
         {/* <Picker></Picker> */}
