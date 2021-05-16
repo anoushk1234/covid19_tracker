@@ -1,4 +1,4 @@
-// import { Select } from "@chakra-ui/react";
+import { Select } from "@chakra-ui/react";
 // NO need to import react when using functional compos 
 
 import { FormControl } from "@chakra-ui/form-control";
@@ -16,7 +16,7 @@ const Picker = ({ countries, addCountry }) => {
 // console.log(temp)
   return (
     <FormControl>
-    <select id="country-select" onChange={addCountry}>
+    <Select variant="filled" onChange={addCountry}>
       <option defaultValue>Country</option>
       {
       countries.map((element,i) =>
@@ -24,7 +24,7 @@ const Picker = ({ countries, addCountry }) => {
       )
       //console.log("post"+countries,addCountry,Event)
       }
-    </select>
+    </Select>
     </FormControl>
   );
 };

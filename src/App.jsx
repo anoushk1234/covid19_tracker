@@ -2,7 +2,6 @@ import {
   HStack,
   StackDivider,
   VStack,
-  Box,
   Flex,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -12,40 +11,75 @@ import BarChart from "./components/Chart";
 import Header from "./components/Header";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 const App = () => {
   // var jsonData=[];
-  var countries = [];
-  useEffect(() => {
-    const fetchCovid = async () => {
-      const data = await fetch(
-        "https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true"
-      );
-      const jsonData = await data.json();
-      // jsArray=  [...jsonData];
-      //console.log(jsonData[19]["country"]);
-      jsonData.map((element) => {
-        countries.push(element["country"]);
+  // let countries = [];
+  //let jsonData=[];
+  // var jsonData = [];
+
+  const [jsonData, setJsonData] = useState([]);
+  const setJson = (t) => {
+    return setJsonData(t);
+  };
+  const fetchCovid = useCallback(async () => {
+    const data = await fetch(
+      "https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true"
+    );
+    const temp = await data.json();
+    console.log(temp);
+    setJson(temp);
+    
+    // jsonData = ;
+    // jsArray=  [...jsonData];
+    // console.log(jsonData[1]["country"]);
+    jsonData.forEach((element) => {
+      setCountries((prevCountries) => {
+        return [...prevCountries, element["country"]];
       });
-      //console.log(countries)
-    };
-    fetchCovid();
-  });
+      // setInfected((n)=>{return });
+    });
+    //console.log(countries)
+  }, []);
+  const [countries, setCountries] = useState([]);
+  const [whichCountry, selectCountry] = useState("init");
+  const [infected, setInfected] = useState(0);
+
+  useEffect(() => {
+     fetchCovid();
+  }, [fetchCovid]);
 
   // useEffect(()=>{
   //   fetchCovid();
   // })
 
-  const [whichCountry, selectCountry] = useState("init");
   // const addCountry=(param)=>{
   // selectCountry([...param]);
   // }
+  console.log(jsonData);
   const addCountry = (e) => {
     console.log("ON SELECT CALLED");
     selectCountry(e.target.value);
     console.log(whichCountry);
   };
 
+  const showInfec = () => {
+    setInfected(() => {
+      console.log(jsonData);
+      jsonData.forEach((item) => {
+        console.log("item" + item, "whichcountry:" + whichCountry);
+        if (item["country"] == whichCountry) {
+          console.log(item["infected"]);
+          return Number(item["infected"]);
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    showInfec();
+  });
+  console.log("infect:" + infected);
   return (
     <VStack
       bg={useColorModeValue("white", "blue.700")}

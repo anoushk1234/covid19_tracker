@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/message.js
 /.pnp
 .pnp.js
 
