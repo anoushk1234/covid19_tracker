@@ -1,9 +1,18 @@
-import { Box, chakra, useColorModeValue, Flex, Image } from "@chakra-ui/react";
+import {
+  Box,
+  chakra,
+  useColorModeValue,
+  Flex,
+  Image,
+  SkeletonCircle,
+} from "@chakra-ui/react";
+import SkeletonLoader from "tiny-skeleton-loader-react";
 import { useState } from "react";
 import { useEffect } from "react";
-import React from "react"
+import React from "react";
 
 const Stat_card = (props) => {
+  const [isLoad, setIsLoad] = useState(false);
   return (
     <Box
       w="sm"
@@ -15,16 +24,25 @@ const Stat_card = (props) => {
       rounded="lg"
     >
       <Flex justifyContent={{ base: "center", md: "end" }} mt={-16}>
-        <Image w={20} h={20} fit="cover" alt="card icon" src={props.netimg} />
+        <SkeletonCircle w={20} h={20} fit="cover" isLoaded={isLoad}>
+          <Image
+            onLoad={() => {
+              setIsLoad(true);
+            }}
+            w={20}
+            h={20}
+            fit="cover"
+            src={props.img}
+          />
+        </SkeletonCircle>
       </Flex>
-
       <chakra.h2
         color={useColorModeValue("gray.800", "white")}
         fontSize={{ base: "2xl", md: "3xl" }}
         mt={{ base: 2, md: 0 }}
         fontWeight="bold"
       >
-      {props.count}
+        {props.count}
       </chakra.h2>
 
       <chakra.p
@@ -32,7 +50,9 @@ const Stat_card = (props) => {
         mb={3}
         color={useColorModeValue("gray.600", "red.400")}
         fontSize="3xl"
-      >{props.tag}</chakra.p>
+      >
+        {props.tag}
+      </chakra.p>
       <chakra.p
         mt={1}
         color={useColorModeValue("gray.600", "gray.300")}
