@@ -48,7 +48,7 @@ const Stat_card = (props) => {
       <chakra.p
         mt={1}
         mb={3}
-        color={useColorModeValue("gray.600", "red.400")}
+        color={useColorModeValue("gray.600",props.txtcol)}
         fontSize="3xl"
       >
         {props.tag}

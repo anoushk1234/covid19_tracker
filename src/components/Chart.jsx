@@ -1,6 +1,6 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
-import { Box, useColourModeValue } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 // defaults.global.tooltips.enabled = false
 // defaults.global.legend.position = 'bottom'
 
@@ -11,7 +11,7 @@ const BarChart = () => {
       py={4}
       px={8}
       rounded="lg"
-      bg={"gray.900"}
+      bg={useColorModeValue("white","blue.900")}
       shadow="lg"
     >
       <div>

@@ -101,7 +101,7 @@ const App = () => {
 
   return (
     <VStack
-      bg={useColorModeValue("white", "blue.700")}
+      bgGradient={useColorModeValue('linear(to-br,#56CCF2, #2F80ED)', 'linear(to-br,#000046, #1CB5E0)')}
       spacing={4}
       align="stretch"
     >
@@ -115,12 +115,14 @@ const App = () => {
             count={infected}
             date="11/05/21"
             desc="Total infections"
+            txtcol="red.400"
             img="https://image.flaticon.com/icons/png/128/2659/2659980.png"
             tag="Infected"
           ></Stat_card>
           <Stat_card
             count={recovered}
             date="11/05/21"
+            txtcol="blue.300"
             tag="Recovered"
             desc="Total number of people recovered"
             img="https://image.flaticon.com/icons/png/128/1513/1513277.png"
@@ -128,6 +130,7 @@ const App = () => {
           <Stat_card
             count={deaths}
             date="11/05/21"
+            txtcol="gray.400"
             tag="Deaths"
             desc="Total Number of Deaths"
             img="https://image.flaticon.com/icons/png/128/3922/3922093.png"
