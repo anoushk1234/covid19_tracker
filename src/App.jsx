@@ -177,7 +177,7 @@ const App = () => {
         {/* <Picker></Picker> */}
       </Flex>
       <Flex justify="center">
-        <BarChart></BarChart>
+        <BarChart whichCountry={whichCountry}></BarChart>
       </Flex>
       <StackDivider h="10" value="xyz"></StackDivider>
     </VStack>

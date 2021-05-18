@@ -1,73 +1,127 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
-import { Box, useColorModeValue } from "@chakra-ui/react";
+import {
+  ResponsiveContainer,
+  AreaChart,
+  XAxis,
+  YAxis,
+  Area,
+  Tooltip,
+  CartesianGrid,
+} from "recharts";
+import { Box, useColorModeValue, Select, Flex } from "@chakra-ui/react";
+import { useState,useEffect } from "react";
 // defaults.global.tooltips.enabled = false
 // defaults.global.legend.position = 'bottom'
+import { format, parseISO, set, subDays } from "date-fns";
 
-const BarChart = () => {
+const data = [];
+for (let num = 30; num >= 0; num--) {
+  data.push({
+    date: subDays(new Date(), num).toISOString().substr(0, 10),
+    value: 1 + Math.random(),
+  });
+}
+const BarChart = (whichCountry) => {
+  const [chartdata, setChartdata] = useState([]);
+  const [opt, setopt] = useState("Choose an option");
+  const fetchChartData = async () => {
+    const data = await fetch(
+      "https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true"
+    );
+    const jsonData = await data.json();
+    // jsArray=  [...jsonData];
+    //console.log(jsonData[1]["country"]);
+
+    jsonData.forEach(async (element) => {
+      console.log(element["country"],whichCountry.whichCountry)
+      if (element["country"] == whichCountry.whichCountry) {
+        //console.log(element["historyData"])
+        const data2 = await fetch(element["historyData"]);
+        const jsonData2 = await data2.json();
+        // jsonData2.forEach((element)=>{
+        //    if(element.hasOwnProperty('infected')==true){
+        //        return masterData.push([...element['infected']])
+        //    }else {
+        //        return [...element['activeCases']]
+        //    }
+        // })
+        for (const key of Object.keys(jsonData2)) {
+          if (opt == "infected") {
+            var cases = jsonData2[key];
+            if (cases.hasOwnProperty("infected")) {
+              setChartdata((previtem) => {
+                return [...previtem, cases["infected"]];
+              });
+            } else {
+              setChartdata((prevItem) => {
+                return [...prevItem, cases["totalCases"]];
+              });
+            }
+          }
+        }
+      }
+    });
+    
+  };
+
+  useEffect(() => {
+    fetchChartData();
+    console.log(chartdata)
+  }, [opt]);
+  
+  const addOpt = (e) => {
+    setopt(e.target.value);
+  };
+  // console.log(opt)
   return (
     <Box
       w="5xl"
       py={4}
       px={8}
       rounded="lg"
-      bg={useColorModeValue("white","gray.900")}
+      bg={useColorModeValue("white", "gray.900")}
       shadow="lg"
     >
+      <Flex justify="center">
+        <Select mb="1.5" width="47%" variant="filled" onChange={addOpt}>
+          <option defaultValue>{opt}</option>
+          <option>Infected</option>
+          <option>Recovered</option>
+          <option>Deceased</option>
+        </Select>
+      </Flex>
       <div>
-        <Line
-          data={{
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [
-              {
-                label: "# of votes",
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                  "rgba(255, 99, 132, 0.2)",
-                  "rgba(54, 162, 235, 0.2)",
-                  "rgba(255, 206, 86, 0.2)",
-                  "rgba(75, 192, 192, 0.2)",
-                  "rgba(153, 102, 255, 0.2)",
-                  "rgba(255, 159, 64, 0.2)",
-                ],
-                borderColor: [
-                  "rgba(255, 99, 132, 1)",
-                  "rgba(54, 162, 235, 1)",
-                  "rgba(255, 206, 86, 1)",
-                  "rgba(75, 192, 192, 1)",
-                  "rgba(153, 102, 255, 1)",
-                  "rgba(255, 159, 64, 1)",
-                ],
-                borderWidth: 1,
-              },
-              // {
-              //   label: 'Quantity',
-              //   data: [47, 52, 67, 58, 9, 50],
-              //   backgroundColor: 'orange',
-              //   borderColor: 'red',
-              // },
-            ],
-          }}
-          height={400}
-          width={600}
-          options={{
-            maintainAspectRatio: false,
-            scales: {
-              yAxes: [
-                {
-                  ticks: {
-                    beginAtZero: true,
-                  },
-                },
-              ],
-            },
-            legend: {
-              labels: {
-                fontSize: 25,
-              },
-            },
-          }}
-        />
+        <ResponsiveContainer width="100%" height={500}>
+          <AreaChart data={data}>
+            <defs>
+              <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#2451B7" stopOpacity={0.4} />
+                <stop offset="75%" stopColor="#2451B7" stopOpacity={0.05} />
+              </linearGradient>
+            </defs>
+
+            <Area dataKey="value" stroke="#2451B7" fill="url(#color)" />
+
+            <XAxis
+              dataKey="date"
+              axisLine={false}
+              tickLine={false}
+              tickFormatter={(str) => {
+                return opt;
+              }}
+            />
+
+            <YAxis
+              datakey="value"
+              axisLine={false}
+              tickLine={false}
+              tickCount={8}
+              tickFormatter={(number) => `$${number.toFixed(2)}`}
+            />
+
+            <CartesianGrid opacity={0.1} vertical={false} />
+          </AreaChart>
+        </ResponsiveContainer>
       </div>
     </Box>
   );
