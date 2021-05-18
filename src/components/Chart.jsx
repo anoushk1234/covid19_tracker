@@ -11,7 +11,7 @@ const BarChart = () => {
       py={4}
       px={8}
       rounded="lg"
-      bg={useColorModeValue("white","blue.900")}
+      bg={useColorModeValue("white","gray.900")}
       shadow="lg"
     >
       <div>

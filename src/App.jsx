@@ -89,28 +89,36 @@ const App = () => {
     fetchDeaths();
   }, [whichCountry]);
 
-  const fetchDate = useCallback(async () => {
-    const data = await fetch(
-      "https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true"
-    );
-    const jsonDatad = await data.json();
-    // jsArray=  [...jsonData];
-    console.log(jsonDatad[1]["country"]);
+  // const fetchDate = useCallback(async () => {
+  //   const data = await fetch(
+  //     "https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true"
+  //   );
+  //   const jsonDatad = await data.json();
+  //   // jsArray=  [...jsonData];
+  //   console.log(jsonDatad[1]["country"]);
 
-    jsonDatad.forEach((element) => {
-      setDate(() => {
-        console.log(element["country"], whichCountry);
-        if (element["country"] == whichCountry) {
-          console.log(typeof element["lastUpdatedApify"]);
-          return (element["lastUpdatedApify"]);
-        }
-      });
-      console.log(date+"in")
-    });
-  });
+  //   jsonDatad.forEach((element) => {
+  //     setDate(() => {
+  //       console.log(element["country"], whichCountry);
+  //       if (element["country"] == whichCountry) {
+  //         console.log(typeof element["lastUpdatedApify"]);
+  //         return [...element["lastUpdatedApify"]];
+  //       }
+  //     });
+  //     console.log(date+"in")
+  //   });
+  // });
+  const fetchDate=()=>{
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+   let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+   let yyyy = today.getFullYear();
+   today = dd + '/' + mm + '/' + yyyy;
+   setDate(today);
+  }
   useEffect(() => {
     fetchDate();
-  }, [whichCountry]);
+  },[setDate]);
 
   // const addCountry=(param)=>{
   // selectCountry([...param]);
@@ -139,7 +147,7 @@ const App = () => {
           <Stat_card
             count={infected}
             date={date?date:"data unavailable"}
-            desc="Total infections"
+            // desc="Total infections"
             txtcol="red.400"
             img="https://image.flaticon.com/icons/png/128/2659/2659980.png"
             tag="Infected"
@@ -149,7 +157,7 @@ const App = () => {
             date={date?date:"data unavailable"}
             txtcol="blue.300"
             tag="Recovered"
-            desc="Total number of people recovered"
+            // desc="Total number of people recovered"
             img="https://image.flaticon.com/icons/png/128/1513/1513277.png"
           ></Stat_card>
           <Stat_card
@@ -157,7 +165,7 @@ const App = () => {
             date={date?date:"data unavailable"}
             txtcol="gray.400"
             tag="Deaths"
-            desc="Total Number of Deaths"
+            // desc="Total Number of Deaths"
             img="https://image.flaticon.com/icons/png/128/3922/3922093.png"
           ></Stat_card>
         </HStack>

@@ -63,9 +63,9 @@ const Stat_card = (props) => {
       <chakra.p
         mb={3}
         color={useColorModeValue("gray.600", "gray.300")}
-        fontSize="xl"
+        fontSize="lg"
       >
-        <i> {props.desc}</i>
+        <i> {"Last Updated"}</i>
       </chakra.p>
     </Box>
   );
