@@ -77,7 +77,7 @@ const App = () => {
       "https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true"
     );
     const jsonDataD = await data.json();
-    console.log(whichCountry);
+   // console.log(whichCountry);
     jsonDataD.forEach((obj) => {
       if (obj["country"] == whichCountry) {
         setDeaths(obj["deceased"]);
