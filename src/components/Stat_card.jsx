@@ -6,9 +6,8 @@ import {
   Image,
   SkeletonCircle,
 } from "@chakra-ui/react";
-import SkeletonLoader from "tiny-skeleton-loader-react";
 import { useState } from "react";
-import { useEffect } from "react";
+
 import React from "react";
 
 const Stat_card = (props) => {

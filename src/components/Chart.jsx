@@ -2,7 +2,7 @@ import React from "react";
 import {
   ResponsiveContainer,
   AreaChart,
-  XAxis,
+
   YAxis,
   Area,
   Tooltip,
@@ -10,20 +10,9 @@ import {
 } from "recharts";
 import { Box, useColorModeValue, Select, Flex, Skeleton } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-// defaults.global.tooltips.enabled = false
-// defaults.global.legend.position = 'bottom'
-import { format, parseISO, set, subDays } from "date-fns";
-import sampledata from "../sampledata";
 
-// const data = [];
-// for (let num = 30; num >= 0; num--) {
-//   data.push({
-//     date: subDays(new Date(), num).toISOString().substr(0, 10),
-//     value: 1 + Math.random(),
-//   });
-// }
-//const ydata=[{ylabel:6000},{ylabel:12000},{ylabel:18000},{ylabel:24000}]
-//var chartTemp=[];
+
+
 const BarChart = ({ whichCountry }) => {
   const [chartdata, setChartdata] = useState([]);
   const [opt, setopt] = useState("Choose an option");

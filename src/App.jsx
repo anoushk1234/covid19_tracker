@@ -2,7 +2,7 @@ import {
   HStack,
   StackDivider,
   VStack,
-  Box,
+
   Flex,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -12,10 +12,9 @@ import BarChart from "./components/Chart";
 import Header from "./components/Header";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
 import React from "react";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 const App = () => {
-  // var jsonData=[];
-  // let countries = [];
+
   const [countries, setCountries] = useState([]);
   const [infected, setInfected] = useState(0);
   const [recovered, setRecovered] = useState("0");
@@ -26,15 +25,15 @@ const App = () => {
       "https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true"
     );
     const jsonData = await data.json();
-    // jsArray=  [...jsonData];
-    console.log(jsonData[1]["country"]);
+
+    //console.log(jsonData[1]["country"]);
 
     jsonData.forEach((element) => {
       setCountries((prevCountries) => {
         return [...prevCountries, element["country"]];
       });
     });
-    //console.log(countries)
+
   }, []);
   useEffect(() => {
     fetchCovid();
@@ -46,7 +45,7 @@ const App = () => {
       "https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true"
     );
     const jsonDataI = await data.json();
-    console.log(whichCountry);
+    //console.log(whichCountry);
     jsonDataI.forEach((obj) => {
       if (obj["country"] == whichCountry) {
         setInfected(obj["infected"]);
@@ -62,7 +61,7 @@ const App = () => {
       "https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true"
     );
     const jsonDataR = await data.json();
-    console.log(whichCountry);
+    //console.log(whichCountry);
     jsonDataR.forEach((obj) => {
       if (obj["country"] == whichCountry) {
         setRecovered(obj["recovered"]);
@@ -89,25 +88,6 @@ const App = () => {
     fetchDeaths();
   }, [whichCountry]);
 
-  // const fetchDate = useCallback(async () => {
-  //   const data = await fetch(
-  //     "https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true"
-  //   );
-  //   const jsonDatad = await data.json();
-  //   // jsArray=  [...jsonData];
-  //   console.log(jsonDatad[1]["country"]);
-
-  //   jsonDatad.forEach((element) => {
-  //     setDate(() => {
-  //       console.log(element["country"], whichCountry);
-  //       if (element["country"] == whichCountry) {
-  //         console.log(typeof element["lastUpdatedApify"]);
-  //         return [...element["lastUpdatedApify"]];
-  //       }
-  //     });
-  //     console.log(date+"in")
-  //   });
-  // });
   const fetchDate=()=>{
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');
@@ -120,15 +100,13 @@ const App = () => {
     fetchDate();
   },[setDate]);
 
-  // const addCountry=(param)=>{
-  // selectCountry([...param]);
-  // }
+
   const addCountry = (e) => {
-    console.log("ON SELECT CALLED");
+   // console.log("ON SELECT CALLED");
     selectCountry(e.target.value);
-    console.log(whichCountry);
+   // console.log(whichCountry);
   };
-  console.log(date);
+ // console.log(date);
   return (
     <VStack
       bgGradient={useColorModeValue(
@@ -147,7 +125,7 @@ const App = () => {
           <Stat_card
             count={infected}
             date={date?date:"data unavailable"}
-            // desc="Total infections"
+        
             txtcol="red.400"
             img="https://image.flaticon.com/icons/png/128/2659/2659980.png"
             tag="Infected"
@@ -157,7 +135,7 @@ const App = () => {
             date={date?date:"data unavailable"}
             txtcol="blue.300"
             tag="Recovered"
-            // desc="Total number of people recovered"
+       
             img="https://image.flaticon.com/icons/png/128/1513/1513277.png"
           ></Stat_card>
           <Stat_card
@@ -165,7 +143,7 @@ const App = () => {
             date={date?date:"data unavailable"}
             txtcol="gray.400"
             tag="Deaths"
-            // desc="Total Number of Deaths"
+      
             img="https://image.flaticon.com/icons/png/128/3922/3922093.png"
           ></Stat_card>
         </HStack>
@@ -174,7 +152,7 @@ const App = () => {
         <Picker countries={countries} addCountry={addCountry}></Picker>
       </Flex>
       <Flex md={10} w="md" alignSelf="center">
-        {/* <Picker></Picker> */}
+       
       </Flex>
       <Flex justify="center">
         <BarChart whichCountry={whichCountry}></BarChart>
